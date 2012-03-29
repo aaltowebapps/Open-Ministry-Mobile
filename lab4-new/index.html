@@ -40,16 +40,23 @@
         });
         
         var Tasks = Backbone.Collection.extend ({
+//          url: '/tasks',
+          url: 'http://localhost:5000/tasks',
           model: Task,
           localStorage: new Backbone.LocalStorage("Tasks")
         });
               
+        Backbone.sync = function Sync() {
+            Backbone.ajaxSync.apply(this, arguments);
+            return Backbone.localSync.apply(this, arguments);
+        };
+        
         $(function() {
           //Load the templates and store them in a global variable
           $('script[type="text/x-handlebars-template"]').each(function () {
             Templates[this.id] = Handlebars.compile($(this).html());
           });
-          
+
           var timer;
           var sec;
           //View for rendering one entry of the blog
