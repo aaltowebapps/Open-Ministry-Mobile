@@ -41,7 +41,7 @@
         
         var Tasks = Backbone.Collection.extend ({
 //          url: '/tasks',
-          url: 'http://localhost:5000/tasks',
+          url: '/tasks',
           model: Task,
           localStorage: new Backbone.LocalStorage("Tasks")
         });
