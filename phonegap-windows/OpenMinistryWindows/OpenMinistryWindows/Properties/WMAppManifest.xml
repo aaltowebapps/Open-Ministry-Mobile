@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
+  <App xmlns="" ProductID="{b25ba849-1451-4dcb-9d97-bfc6c69d1b05}" Title="OpenMinistryWindows" 
+       RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  
+       Author="OpenMinistryWindows author" 
+       Description="PhoneGap for Windows Phone 7" 
+       Publisher="OpenMinistryWindows">
+    
+    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_IDENTITY_DEVICE" />
+      <Capability Name="ID_CAP_IDENTITY_USER" />
+      <Capability Name="ID_CAP_LOCATION" />
+      <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
+
+    </Capabilities>
+    
+    <Tasks>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="OpenMinistryWindowsToken" TaskName="_default">
+        <TemplateType5>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+          <Count>0</Count>
+          <Title>OpenMinistryWindows</Title>
+        </TemplateType5>
+      </PrimaryToken>
+    </Tokens>
+  </App>
+</Deployment>
