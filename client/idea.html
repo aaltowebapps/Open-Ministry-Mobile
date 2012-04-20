@@ -1,5 +1,8 @@
 <!doctype html>
-<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--> <!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]--> <!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]--> <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--> 
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]--> 
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]--> 
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
 <head>
   <meta charset="UTF-8">
@@ -13,23 +16,89 @@
 
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <!--<link rel="stylesheet" href="css/style.css?v=2">-->
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.7.1.min.js"%3E%3C/script%3E'))</script>
   <script src="js/libs/ember-0.9.6.min.js"></script>
-  <script src="lib/bootstrap/bootstrap.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="js/app.js"></script>
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-</head>
+  <style>
+      body {
+        /*padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+
+ </head>
 <body>
   <script type="text/x-handlebars">
-    {{#view App.MyView}}
-      <h1>Hello world!</h1>
-    {{/view}}
+      <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="#">Open Ministry</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li class="active"><a href="#">Dashboard</a></li>
+                  <li><a href="#about">Home</a></li>
+                  <li><a href="#contact">Ideas</a></li>
+                  <li><a href="#contact">Idea</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <h1>{{App.Idea.title}}</h1><br />
+          <div class="tabbable">
+              <ul class="nav nav-tabs">
+                  <li class="active"><a href="#1" data-toggle="tab">Introduction</a></li>
+                  <li><a href="#2" data-toggle="tab">General Statement</a></li>
+                  <li><a href="#3" data-toggle="tab">Expert Opinions</a></li>
+                  <li><a href="#4" data-toggle="tab">Comments</a></li>
+                  <li><a href="#5" data-toggle="tab">Voting</a></li>
+              </ul>
+              <div class="tab-content">
+                  <div class="tab-pane active" id="1">
+                      <p align="justify">{{App.Idea.introduction}}</p>
+                  </div>
+                  <div class="tab-pane" id="2">
+                      <p align="justify">{{App.Idea.generalStatement}}</p>                      
+                  </div>
+                  <div class="tab-pane" id="3">
+                      <p align="justify">{{App.Idea.expertOpinions}}</p>
+                      <a href="#">Are you an expert?</a><br />
+                      <a href="#">Suggest an expert!</a>
+                  </div>
+                  <div class="tab-pane" id="4">
+                      <p align="justify">{{App.Idea.comments}}</p>   
+                      <a href="#">Write a comment</a>                   
+                  </div>
+                  <div class="tab-pane" id="5" align="center">
+                      <img src="img/voting.png" alt="voting" /><br />
+                      <h3>Should it be a law?</h3><br />
+                      <a href="#" class="btn btn-success" style="width:200px;">
+                          <i class="icon-ok icon-white"></i>
+                          YES
+                      </a><br />
+                      <a href="#" class="btn btn-danger" style="width:200px;">
+                          <i class="icon-remove icon-white"></i>
+                          NO
+                      </a>   
+                  </div>
+              </div>
+          </div>
+        </div> <!-- /container -->
+    </div>
   </script>
 </body>
 </html>
