@@ -1,5 +1,8 @@
 <!doctype html>
-<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--> <!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]--> <!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]--> <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--> 
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]--> 
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]--> 
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
 <head>
   <meta charset="UTF-8">
@@ -13,23 +16,89 @@
 
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <!--<link rel="stylesheet" href="css/style.css?v=2">-->
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.7.1.min.js"%3E%3C/script%3E'))</script>
   <script src="js/libs/ember-0.9.6.min.js"></script>
-  <script src="lib/bootstrap/bootstrap.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="js/app.js"></script>
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-</head>
+  <style>
+      body {
+        /*padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+
+ </head>
 <body>
   <script type="text/x-handlebars">
-    {{#view App.MyView}}
-      <h1>Hello world!</h1>
-    {{/view}}
+   <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="#">Open Ministry</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li class="active"><a href="index.html">Dashboard</a></li>
+                  <li><a href="#about">Home</a></li>
+                  <li><a href="ideas.html">Ideas</a></li>
+                  <li><a href="idea.html">Idea</a></li>
+                  <li><a href="settings.html">Settings</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <h1>{{App.Dashboard.title}}</h1><br />
+          <h3>News <span class="badge badge-info">3</span></h3>
+          <table id="ideas" class="table table-striped">
+            <tr>
+              <th>Title</th>
+              <th>Date</th>
+            </tr>            
+            <tr>
+              <td><a href="#">New mobile Version</a></td>
+              <td>2012-04-22</td>
+            </tr>
+            <tr>
+              <td><a href="#">new Idea pages</a></td>
+              <td>2012-04-12</td>
+            </tr>
+            <tr>
+              <td><a href="#">project is submitted</a></td>
+              <td>2012-04-05</td>
+            </tr>
+          </table>
+          <h3>Ideas you are following  <span class="badge badge-info">2</span></h3>
+          <table id="ideas" class="table table-striped">
+            <tr>
+              <th>Idea</th>
+              <th>Votes</th>
+              <th>Status</th>
+            </tr>            
+            <tr>
+              <td><a href="idea.html?id={{id}}">Tehdään laki kapitalismin hävittämiseksi</a></td>
+              <td>50%Y 50%N</td>
+              <td>idea / 2012-04-02</td>
+            </tr>
+            <tr>
+              <td><a href="idea.html?id={{id}}">Kuri ja järjestys</a></td>
+              <td>50%Y 50%N</td>
+              <td>idea / 2012-04-001</td>
+            </tr>
+          </table>
+        </div> <!-- /container -->
+    </div>
   </script>
 </body>
 </html>
