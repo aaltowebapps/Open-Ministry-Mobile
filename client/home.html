@@ -47,8 +47,8 @@
               <a class="brand" href="#">Open Ministry</a>
               <div class="nav-collapse">
                 <ul class="nav">
-                  <li class="active"><a href="index.html">Dashboard</a></li>
-                  <li><a href="home.html">Home</a></li>
+                  <li><a href="index.html">Dashboard</a></li>
+                  <li class="active"><a href="home.html">Home</a></li>
                   <li><a href="how.html">How does it work?</a></li>
                   <li><a href="ideas.html">Ideas</a></li>
                   <li><a href="idea.html">Idea</a></li>
@@ -60,27 +60,8 @@
         </div>
 
         <div class="container">
-          <h1>{{App.Dashboard.title}}</h1><br />
-          <h3>News <span class="badge badge-info">3</span></h3>
-          <table id="ideas" class="table table-striped">
-            <tr>
-              <th>Title</th>
-              <th>Date</th>
-            </tr>            
-            <tr>
-              <td><a href="#">New mobile Version</a></td>
-              <td>2012-04-22</td>
-            </tr>
-            <tr>
-              <td><a href="#">new Idea pages</a></td>
-              <td>2012-04-12</td>
-            </tr>
-            <tr>
-              <td><a href="#">project is submitted</a></td>
-              <td>2012-04-05</td>
-            </tr>
-          </table>
-          <h3>Ideas you are following  <span class="badge badge-info">2</span></h3>
+          <h1>{{App.Pages.page.2.title}}</h1><br />
+          <h3>Top Ideas</h3>
           <table id="ideas" class="table table-striped">
             <tr>
               <th>Idea</th>
@@ -93,10 +74,34 @@
               <td>idea / 2012-04-02</td>
             </tr>
             <tr>
+              <td><a href="idea.html?id={{id}}">Kuri ja järjestys <span class="label label-success">New</span></a></td>
+              <td>50%Y 50%N</td>
+              <td>idea / 2012-04-23</td>
+            </tr>
+            <tr>
+              <td colspan="3"><a href="ideas.html">Show all</a></td>
+            <tr>
+          </table>
+          <h3>Top Drafts</h3>
+          <table id="ideas" class="table table-striped">
+            <tr>
+              <th>Idea</th>
+              <th>Votes</th>
+              <th>Status</th>
+            </tr>            
+            <tr>
+              <td><a href="idea.html?id={{id}}">Tehdään laki kapitalismin hävittämiseksi</a></td>
+              <td>50%Y 50%N</td>
+              <td>draft / 2012-04-02</td>
+            </tr>
+            <tr>
               <td><a href="idea.html?id={{id}}">Kuri ja järjestys</a></td>
               <td>50%Y 50%N</td>
-              <td>idea / 2012-04-001</td>
+              <td>draft / 2012-04-001</td>
             </tr>
+            <tr>
+              <td colspan="3"><a href="ideas.html">Show all</a></td>
+            <tr>
           </table>
         </div> <!-- /container -->
     </div>

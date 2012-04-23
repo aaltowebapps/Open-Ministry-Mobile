@@ -47,10 +47,12 @@
               <a class="brand" href="#">Open Ministry</a>
               <div class="nav-collapse">
                 <ul class="nav">
-                  <li class="active"><a href="#">Dashboard</a></li>
-                  <li><a href="#about">Home</a></li>
-                  <li><a href="#contact">Ideas</a></li>
-                  <li><a href="#contact">Idea</a></li>
+                  <li><a href="index.html">Dashboard</a></li>
+                  <li><a href="home.html">Home</a></li>
+                  <li><a href="how.html">How does it work?</a></li>
+                  <li><a href="ideas.html">Ideas</a></li>
+                  <li class="active"><a href="idea.html">Idea</a></li>
+                  <li><a href="settings.html">Settings</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
@@ -59,6 +61,12 @@
 
         <div class="container">
           <h1>{{App.Idea.title}}</h1><br />
+          <div align="right">
+            <a href="#" class="btn btn-success btn-mini">
+              <i class="icon-star-empty" />
+              You follow this idea
+            </a>
+          </div>
           <div class="tabbable">
               <ul class="nav nav-tabs">
                   <li class="active"><a href="#1" data-toggle="tab">Introduction</a></li>

@@ -32,7 +32,6 @@
         /*padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
   </style>
-
  </head>
 <body>
   <script type="text/x-handlebars">
@@ -48,9 +47,11 @@
               <div class="nav-collapse">
                 <ul class="nav">
                   <li><a href="index.html">Dashboard</a></li>
-                  <li><a href="#about">Home</a></li>
+                  <li><a href="home.html">Home</a></li>
+                  <li><a href="how.html">How does it work?</a></li>
                   <li class="active"><a href="ideas.html">Ideas</a></li>
                   <li><a href="idea.html">Idea</a></li>
+                  <li><a href="settings.html">Settings</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
@@ -58,29 +59,22 @@
         </div>
 
         <div class="container">
-          <h1>{{App.Ideas.title}}</h1><br />
+          <h1>{{App.Pages.page.0.title}}</h1><br />
 
-          <table class="table table-striped">
+          <table id="ideas" class="table table-striped">
             <tr>
-              <th>Name</th>
+              <th>Idea</th>
               <th>Votes</th>
               <th>Status</th>
             </tr>
-            <tr>
-              <td>Journal of the Scripture calls the police witnesses, or for more information. The story should Miun think</td>
-              <td>1 - 0% | 100%</td>
-              <td>IDEA / 20/04/2012</td>
-            </tr>
-            <tr>
-              <td>The law establishing the transsexual sex is a point that discriminates against people who experience</td>
-              <td>14 - 93% | 7%</td>
-              <td>IDEA / 18/04/2012</td>
-            </tr>
-            <tr>
-              <td>The real heavy with non-governmental initiatives in parliament is unlikely to be (especially in the early stages)</td>
-              <td>8 - 75% | 25%</td>
-              <td>IDEA / 16/04/2012</td>
-            </tr>
+            
+            {{#each App.ideasController}}
+              <tr>
+                <td><a href="idea.html?id={{id}}">{{title}}</a></td>
+                <td>50%Y 50%N</td>
+                <td>{{state}} / {{created_at}}</td>
+              </tr>
+            {{/each}}
           </table>
 
           <div class="pagination pagination-centered">

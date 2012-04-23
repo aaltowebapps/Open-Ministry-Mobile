@@ -48,7 +48,8 @@
               <div class="nav-collapse">
                 <ul class="nav">
                   <li><a href="index.html">Dashboard</a></li>
-                  <li><a href="#about">Home</a></li>
+                  <li><a href="home.html">Home</a></li>
+                  <li><a href="how.html">How does it work?</a></li>
                   <li><a href="ideas.html">Ideas</a></li>
                   <li><a href="idea.html">Idea</a></li>
                   <li class="active"><a href="settings.html">Settings</a></li>
@@ -59,7 +60,11 @@
         </div>
 
         <div class="container">
-          <h1>{{App.Settings.title}}</h1><br />
+          <div class="alert alert-success">
+            Your Settings have been changed successfully!
+            <a class="close" data-dismiss="alert">×</a>
+          </div>
+          <h1>{{App.Pages.page.3.title}}</h1><br />
           <form class="form-horizontal">
             <legend>Log in</legend>
             <div class="control-group">
@@ -68,9 +73,10 @@
             <div class="control-group">
               <input type="password" class="input-xlarge" name="passowrd" placeholder="Password">
             </div>  
+            <a href="#">Log in with your Facebook Account</a>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Sign In</button>
-            </div>  
+            </div>
           </form>
           <form class="form-horizontal">
             <fieldset>
