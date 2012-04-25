@@ -1,4 +1,10 @@
-Structure of the repository
+## Open-Ministry-Mobile
+
+### Online Version
+
+[`Online Version`](http://wunderding.at/open-ministry-mobile/).
+
+### Structure of the repository
 
 * client: contains the webpages for the mobile client
 * screenshots: screenshots of the client in the iPhone Simulator
