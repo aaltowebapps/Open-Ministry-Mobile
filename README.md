@@ -3,6 +3,16 @@
 ### Online Version
 
 [`Online Version`](http://wunderding.at/open-ministry-mobile/).
+(best viewed with the iOS Simualtor)
+
+### Installation guide - client
+
+1. Download client folder
+2. run index.html in your browser or mobile device simulator
+
+### Installation guide - REST API
+
+The rest code is deployed on a herokuapp server. Links to the REST Services can be found on the [`wiki pages`](https://github.com/aaltowebapps/Open-Ministry-Mobile/wiki/API-Documentation).
 
 ### Structure of the repository
 
