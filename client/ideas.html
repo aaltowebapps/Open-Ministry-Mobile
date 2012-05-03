@@ -22,6 +22,7 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.7.1.min.js"%3E%3C/script%3E'))</script>
   <script src="js/libs/ember-0.9.6.min.js"></script>
+  <script src="js/libs/ember-data-latest.js"></script>
   <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="js/app.js"></script>
   <!--[if lt IE 9]>
@@ -72,7 +73,7 @@
               <tr>
                 <td><a href="idea.html?id={{id}}">{{title}}</a></td>
                 <td>50%Y 50%N</td>
-                <td>{{state}} / {{created_at}}</td>
+                <td>{{state}} / {{shortUpdatedAt}}</td>
               </tr>
             {{/each}}
           </table>
