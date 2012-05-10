@@ -17,11 +17,11 @@
 
   <script src="js/libs/jquery-1.7.1.js"></script>
   <script src="js/libs/jquery.lorem.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.js"></script>  
   <script src="js/libs/ember.js"></script>
+  <script src="js/libs/ember-data-latest.js"></script>
   <script src="js/libs/ember-routemanager.js"></script>
   <script src="js/libs/ember-layout.js"></script>
-  <script src="js/libs/ember-data-latest.js"></script>
   <script src="js/app.js"></script>
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,7 +60,7 @@
                   <li class="home"><a href="#home">Home</a></li>
                   <li class="how"><a href="#how">How does it work?</a></li>
                   <li class="ideasList"><a href="#ideasList">Ideas</a></li>
-                  <li class="idea"><a href="#idea">Idea</a></li>
+                  <li class="ideaDetail"><a href="#ideaDetail/idea-section1">Idea</a></li>
                   <li class="settings"><a href="#settings">Settings</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
@@ -205,7 +205,12 @@
 
   <script type="text/x-handlebars" data-template-name="ideasList">
     <h1>{{App.Pages.page.0.title}}</h1><br />
-
+    <div class="sub-container">
+        {{dynamicView}}
+    </div>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="ideas">   
     <table id="ideas" class="table table-striped">
       <tr>
         <th>Idea</th>
@@ -213,9 +218,9 @@
         <th>Status</th>
       </tr>
       
-      {{#each App.allIdeas}}
+      {{#each content}}
         <tr>
-          <td><a href="idea.html?id={{id}}">{{title}}</a></td>
+          <td><a {{bindAttr href="section1_url"}}>{{title}}</a></td>
           <td>50%Y 50%N</td>
           <td>{{state}} / {{shortUpdatedAt}}</td>
         </tr>
@@ -236,51 +241,68 @@
     </div>          
   </script>
 
-  <script type="text/x-handlebars" data-template-name="idea">
-    <h1>{{App.Idea.title}}</h1><br />
-    <div align="right">
+  <script type="text/x-handlebars" data-template-name="ideaDetail">
+    <h1>{{App.actualIdea.title}}</h1><br />
+    <div align="left">
       <a href="#" class="btn btn-success btn-mini">
         <i class="icon-star-empty" />
         You follow this idea
       </a>
     </div>
-    <div class="tabbable">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#1" data-toggle="tab">Introduction</a></li>
-        <li><a href="#2" data-toggle="tab">General Statement</a></li>
-        <li><a href="#3" data-toggle="tab">Expert Opinions</a></li>
-        <li><a href="#4" data-toggle="tab">Comments</a></li>
-        <li><a href="#5" data-toggle="tab">Voting</a></li>
+    <div class="subnav tabbable">
+      <ul class ="nav nav-pills">
+        <li class="idea-section1"><a {{bindAttr href="App.actualIdea.section1_url"}}>Introduction</a></li>
+        <li class="idea-section2"><a {{bindAttr href="App.actualIdea.section2_url"}}>General Statement</a></li>
+        <li class="idea-section3"><a {{bindAttr href="App.actualIdea.section3_url"}}>Expert Opinions</a></li>
+        <li class="idea-section4"><a {{bindAttr href="App.actualIdea.section4_url"}}>Comments</a></li>
+        <li class="idea-section5"><a {{bindAttr href="App.actualIdea.section5_url"}}>Voting</a></li>
       </ul>
-        <div class="tab-content">
-          <div class="tab-pane active swipe" id="1">
-            <p align="justify">{{App.Idea.introduction}}</p>
-          </div>
-          <div class="tab-pane swipe" id="2">
-            <p align="justify">{{App.Idea.generalStatement}}</p>      
-          </div>
-          <div class="tab-pane swipe" id="3">
-            <p align="justify">{{App.Idea.expertOpinions}}</p>
-            <a href="#">Are you an expert?</a><br />
-            <a href="#">Suggest an expert!</a>
-          </div>
-          <div class="tab-pane swipe" id="4">
-            <p align="justify">{{App.Idea.comments}}</p>   
-            <a href="#">Write a comment</a>                   
-          </div>
-          <div class="tab-pane swipe" id="5" align="center">
-            <img src="img/voting.png" alt="voting" /><br />
-            <h3>Should it be a law?</h3><br />
-            <a href="#" class="btn btn-success" style="width:200px;">
-                <i class="icon-ok icon-white"></i>
-                YES
-            </a><br />
-            <a href="#" class="btn btn-danger" style="width:200px;">
-                <i class="icon-remove icon-white"></i>
-                NO
-            </a>   
-          </div>
-        </div>
+      <div class="sub-container tab-content">
+          {{dynamicView}}
+      </div>  
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="idea-section1">
+    <div class="tab-pane active" id="1">
+      <p align="justify">{{App.actualIdea.summary}}</p>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="idea-section2">
+    <div class="tab-pane" id="2">
+      <p align="justify">{{App.actualIdea.body}}</p>      
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="idea-section3">
+    <div class="tab-pane" id="3">
+      <p align="justify">{{App.actualIdea.expertOpinions}}</p>
+      <a href="#">Are you an expert?</a><br />
+      <a href="#">Suggest an expert!</a>
+    </div>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="idea-section4">
+    <div class="tab-pane" id="4">
+      <p align="justify">{{App.actualIdea.comments}}</p>   
+      <a href="#">Write a comment</a>                   
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="idea-section5">
+    <div class="tab-pane" id="5" align="center">
+      <img src="img/voting.png" alt="voting" /><br />
+      <h3>Should it be a law?</h3><br />
+      Your vote status: {{App.actualIdea.user_voted}}
+      <a href="#" class="btn btn-success" style="width:200px;">
+          <i class="icon-ok icon-white"></i>
+          YES
+      </a><br />
+      <a href="#" class="btn btn-danger" style="width:200px;">
+          <i class="icon-remove icon-white"></i>
+          NO
+      </a>   
     </div>
   </script>
 
