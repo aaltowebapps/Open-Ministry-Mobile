@@ -517,7 +517,7 @@ function locateUser(node) {
 	if(App.activeUser.get('allow_position')){
 		navigator.geolocation.watchPosition(function(geodata) {
 			console.log("app.js>>locateUser: LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude);
-			node.innerHTML = "Debug Info:<br /><br />LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude+'<a class="close" data-dismiss="alert">×</a>';
+			node.innerHTML = '<a class="close" data-dismiss="alert">×</a>Debug Info:<br /><br />LAT: ' + geodata.coords.latitude + '<br />LONG: ' + geodata.coords.longitude;
 		},function() {},{enableHighAccuracy:true, maximumAge:30000, timeout:5000} );
 	}
 	else {
