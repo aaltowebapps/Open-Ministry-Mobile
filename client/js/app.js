@@ -86,15 +86,22 @@ App.routeManager = Em.RouteManager.create({
 	  console.log(App.actualComments);
 	  //App.actualIdea.get('comments').addObjects(App.store.findAll(App.CommentObj).content);
 	  */
-	},
+	},	
     section1: App.SubNavState.create({
       route: 'idea-section1/:id',
       viewClass: Em.View.extend({
         templateName: 'idea-section1',
         didInsertElement: function() {
         	addSwipeGesture(null,"section2_url");
+        	setActiveTab("idea-section1");
+        },
+        willDestroyElement: function() {
+        	resetActiveTab("idea-section1");
         }
-      })
+      })/*,
+	  exit: function(stateManager,transition) {
+		resetActiveTab("idea-section1");
+	  }*/
     }),
     section2: App.SubNavState.create({
       route: 'idea-section2/:id',
@@ -102,8 +109,15 @@ App.routeManager = Em.RouteManager.create({
         templateName: 'idea-section2',
         didInsertElement: function() {
         	addSwipeGesture("section1_url","section3_url");
+        	setActiveTab("idea-section2");
+        },
+        willDestroyElement: function() {
+        	resetActiveTab("idea-section2");
         }
-      })
+      })/*,
+	  exit: function(stateManager,transition) {
+		resetActiveTab("idea-section2");
+	  }*/
     }),
     section3: App.SubNavState.create({
       route: 'idea-section3/:id',
@@ -111,8 +125,15 @@ App.routeManager = Em.RouteManager.create({
         templateName: 'idea-section3',
         didInsertElement: function() {
         	addSwipeGesture("section2_url","section4_url");
+        	setActiveTab("idea-section3");
+        },
+        willDestroyElement: function() {
+        	resetActiveTab("idea-section3");
         }
-      })
+      })/*,
+	  exit: function(stateManager,transition) {
+		resetActiveTab("idea-section3");
+	  }*/
     }),
     section4: App.SubNavState.create({
       route: 'idea-section4/:id',
@@ -120,8 +141,15 @@ App.routeManager = Em.RouteManager.create({
         templateName: 'idea-section4',
         didInsertElement: function() {
         	addSwipeGesture("section3_url","section5_url");
+        	setActiveTab("idea-section4");
+        },
+        willDestroyElement: function() {
+        	resetActiveTab("idea-section4");
         }
-      })
+      })/*,
+	  exit: function(stateManager,transition) {
+		resetActiveTab("idea-section4");
+	  }*/
     }),
     section4comment: App.SubNavState.create({
       route: 'idea-section4-comment/:id',
@@ -129,8 +157,15 @@ App.routeManager = Em.RouteManager.create({
         templateName: 'idea-section4-comment',
         didInsertElement: function() {
         	addSwipeGesture("section3_url","section5_url");
+        	setActiveTab("idea-section4");
+        },
+        willDestroyElement: function() {
+        	resetActiveTab("idea-section4");
         }
-      })
+      })/*,
+	  exit: function(stateManager,transition) {
+		resetActiveTab("idea-section4");
+	  }*/
     }),
     section5: App.SubNavState.create({
       route: 'idea-section5/:id',
@@ -139,7 +174,11 @@ App.routeManager = Em.RouteManager.create({
         didInsertElement: function() {
         	addSwipeGesture("section4_url",null);
         	drawPie(document.getElementById("pieCanvas"));
-        	//drawPieRaphael();
+			//drawPieRaphael();
+        	setActiveTab("idea-section5");
+        },
+        willDestroyElement: function() {
+        	resetActiveTab("idea-section5");
         }
       })
     })
@@ -261,7 +300,7 @@ App.CommentObj.reopenClass({
 });
 
 /************************************************/
-/* Ember Object for Comment testing 
+/* Ember Object for Comment testing (should be replaced with real REST Object, when API available)
 /************************************************/
 
 App.Comment = Em.Object.extend({
@@ -290,6 +329,36 @@ App.CreateCommentView = Em.TextArea.extend({
     }
   }
 });
+
+App.User = Ember.Object.extend({
+	id: null,
+	username: null,
+	password: null,
+	allow_postion: null,
+	save_offline: null,
+	subscribe_newsletter: null
+});
+
+App.userController = Em.ArrayProxy.create({ 
+	content: [],
+	createUser: function(username,password,allow_position,save_offline,subscribe_newsletter) {
+		var user = App.User.create({username: username, password: password, allow_position: allow_position, save_offline: save_offline, subscribe_newsletter: subscribe_newsletter});
+	    this.pushObject(user);
+	    App.activeUser = user;
+  }
+});
+
+App.userController.createUser('derro','asdf',true,false,false);
+/*App.testuser1 = App.User.create({
+	username: 'derro',
+	password: 'asdf',
+	allow_position: false,
+	save_offline: false,
+	subscribe_newsletter: false
+)};	
+
+App.userController.pushObject(App.testuser1);
+*/
 
 /************************************************/
 /* Ember Data Store Definition
@@ -445,10 +514,16 @@ function drawPieRaphael() {
 
 function locateUser(node) {
 	//Update the position at least every 5 seconds and use GPS if available
-	navigator.geolocation.watchPosition(function(geodata) {
-		console.log("app.js>>locateUser: LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude);
-		node.innerHTML = "Debug Info:<br /><br />LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude+'<a class="close" data-dismiss="alert">×</a>';
-	},function() {},{enableHighAccuracy:true, maximumAge:30000, timeout:5000} );
+	if(App.activeUser.get('allow_position')){
+		navigator.geolocation.watchPosition(function(geodata) {
+			console.log("app.js>>locateUser: LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude);
+			node.innerHTML = "Debug Info:<br /><br />LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude+'<a class="close" data-dismiss="alert">×</a>';
+		},function() {},{enableHighAccuracy:true, maximumAge:30000, timeout:5000} );
+	}
+	else {
+		console.log("app.js>>locateUser: no location -> because user setting is false");
+		node.innerHTML = "Debug Info:<br /><br />Localization is offline";
+	}	
 }
 
 function addSwipeGesture(left,right) {
@@ -468,7 +543,17 @@ function addSwipeGesture(left,right) {
      min_move_x: 20,
      min_move_y: 20,
      preventDefaultEvents: true
-});
+	});
+}
+
+function setActiveTab(tabid){
+	$("#"+tabid+"-tab").removeAttr("class");
+	$("#"+tabid+"-tab").attr("class",tabid+" active");
+}
+
+function resetActiveTab(tabid){
+	$("#"+tabid+"-tab").removeAttr("class");
+	$("#"+tabid+"-tab").attr("class",tabid);
 }
 
 Handlebars.registerHelper('fct_shortUrl', function() {

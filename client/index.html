@@ -248,11 +248,11 @@
       </div>
       <div class="subnav tabbable">
         <ul class ="nav nav-pills">
-          <li class="idea-section1"><a {{bindAttr href="App.actualIdea.section1_url"}}>Introduction</a></li>
-          <li class="idea-section2"><a {{bindAttr href="App.actualIdea.section2_url"}}>General Statement</a></li>
-          <li class="idea-section3"><a {{bindAttr href="App.actualIdea.section3_url"}}>Expert Opinions</a></li>
-          <li class="idea-section4"><a {{bindAttr href="App.actualIdea.section4_url"}}>Comments</a></li>
-          <li class="idea-section5"><a {{bindAttr href="App.actualIdea.section5_url"}}>Voting</a></li>
+          <li id="idea-section1-tab" class="idea-section1"><a {{bindAttr href="App.actualIdea.section1_url"}}>Introduction</a></li>
+          <li id="idea-section2-tab" class="idea-section2"><a {{bindAttr href="App.actualIdea.section2_url"}}>General Statement</a></li>
+          <li id="idea-section3-tab" class="idea-section3"><a {{bindAttr href="App.actualIdea.section3_url"}}>Expert Opinions</a></li>
+          <li id="idea-section4-tab" class="idea-section4"><a {{bindAttr href="App.actualIdea.section4_url"}}>Comments</a></li>
+          <li id="idea-section5-tab" class="idea-section5"><a {{bindAttr href="App.actualIdea.section5_url"}}>Voting</a></li>
         </ul>
         <div class="sub-container tab-content">       
               {{dynamicView}}
@@ -349,43 +349,48 @@
       <a class="close" data-dismiss="alert">×</a>
     </div>
     <h1>{{App.Pages.page.3.title}}</h1><br />
-    <form class="form-horizontal">
-      <legend>Log in</legend>
-      <div class="control-group">
-        <input type="text" class="input-xlarge" name="username" placeholder="Username">
-      </div>
-      <div class="control-group">
-        <input type="password" class="input-xlarge" name="passowrd" placeholder="Password">
-      </div>  
-      <a href="#">Log in with your Facebook Account</a>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Sign In</button>
-      </div>
-    </form>
-    <form class="form-horizontal">
-      <fieldset>
-        <legend>Additional Settings</legend>
-        <div class="control-group">
-          <label class="checkbox">
-            <input type="checkbox"> Allow using your position
-          </label>
-        </div>  
-        <div class="control-group">
-          <label class="checkbox">
-            <input type="checkbox" checked="checked"> Save data for offline usage on your device
-          </label>
-        </div>  
-        <div class="control-group">
-          <label class="checkbox">
-            <input type="checkbox"> Subscribe to Newsletter
-          </label>
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Save changes</button>
-          <button class="btn">Cancel</button>
-        </div>  
-      </fieldset>
-    </form>
+    {{#if App.activeUser}}
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>Additional Settings</legend>
+            <div class="control-group">
+              <label class="checkbox">
+                {{view Ember.Checkbox valueBinding="App.activeUser.allow_position"}}Allow using your position
+              </label>
+            </div>  
+            <div class="control-group">
+              <label class="checkbox">
+                {{view Ember.Checkbox valueBinding="App.activeUser.save_offline"}}Save data for offline usage on your device
+              </label>
+            </div>  
+            <div class="control-group">
+              <label class="checkbox">
+                {{view Ember.Checkbox valueBinding="App.activeUser.subscribe_newsletter"}}Subscribe to Newsletter
+              </label>
+            </div>
+            <!--
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button class="btn">Cancel</button>
+            </div>  
+            -->
+          </fieldset>
+        </form>
+    {{else}}    
+        <form class="form-horizontal">
+          <legend>Log in</legend>
+          <div class="control-group">
+            <input type="text" class="input-xlarge" name="username" placeholder="Username">
+          </div>
+          <div class="control-group">
+            <input type="password" class="input-xlarge" name="passowrd" placeholder="Password">
+          </div>  
+          <a href="#">Log in with your Facebook Account</a>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </div>
+        </form>
+    {{/if}}
   </script>
 </body>
 </html>
