@@ -283,11 +283,34 @@
   
   <script type="text/x-handlebars" data-template-name="idea-section4">
     <div class="tab-pane" id="4">
-      <p align="justify">{{App.actualIdea.comments}}</p>   
-      {{#each App.actualComments}}
-        <p>{{id}}</p>
+    {{#if App.commentController.content}}
+      {{#each App.commentController}}
+        <h3>{{username}}</h3>
+        <p>{{comment}}</p>
+        <br />
       {{/each}}
-      <a href="#">Write a comment</a>                   
+    {{else}}
+      <p>no comments posted yet. Be the first one:</p>
+    {{/if}}  
+      <a {{bindAttr href="App.actualIdea.section4_comment_url"}}>Write a comment</a>                   
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="idea-section4-comment">
+    <div class="tab-pane" id="6"> 
+      <form class="form-horizontal">
+        <legend>Write a comment</legend>
+        <div class="control-group">
+          <!--<input type="text" class="input-xlarge" name="username" placeholder="Username">-->
+        </div>
+        <div class="control-group">
+          {{view App.CreateCommentView id="new-comment" placeholder="Your comment goes here..."}}
+          <!--<textarea class="input-xlarge" id="textarea" rows="3" placeholder="Your comment goes here..."></textarea>-->
+        </div>  
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Send comment</button>
+        </div>
+      </form>                 
     </div>
   </script>
 

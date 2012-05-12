@@ -123,6 +123,15 @@ App.routeManager = Em.RouteManager.create({
         }
       })
     }),
+    section4comment: App.SubNavState.create({
+      route: 'idea-section4-comment/:id',
+      viewClass: Em.View.extend({
+        templateName: 'idea-section4-comment',
+        didInsertElement: function() {
+        	addSwipeGesture("section3_url","section5_url");
+        }
+      })
+    }),
     section5: App.SubNavState.create({
       route: 'idea-section5/:id',
       viewClass: Em.View.extend({
@@ -214,6 +223,9 @@ App.IdeaObj = DS.Model.extend({
 	section4_url: function() {
 		return "#ideaDetail/idea-section4/" + this.get('id');
 	}.property('url'),	
+	section4_comment_url: function() {
+		return "#ideaDetail/idea-section4-comment/" + this.get('id');
+	}.property('url'),	
 	section5_url: function() {
 		return "#ideaDetail/idea-section5/" + this.get('id');
 	}.property('url'),	
@@ -246,6 +258,37 @@ App.IdeaObj.reopenClass({
 App.CommentObj.reopenClass({
     url: 'ideas/1/comment'
     //url: 'http://192.168.1.112:3000/ideas' /* if it is on a different computer running */
+});
+
+/************************************************/
+/* Ember Object for Comment testing 
+/************************************************/
+
+App.Comment = Em.Object.extend({
+  idea_id: null,
+  username: null,
+  comment: null
+});
+
+App.commentController = Em.ArrayProxy.create({
+  content: [],
+
+  createComment: function(comment,id,username) {
+    var comment = App.Comment.create({idea_id: id, username: username, comment: comment});
+    this.pushObject(comment);
+  }
+});
+
+
+App.CreateCommentView = Em.TextArea.extend({
+  insertNewline: function() {
+    var value = this.get('value');
+    if (value) {
+      App.commentController.createComment(value,App.actualIdea.get('id'),'testuser');
+      this.set('value', '');
+      window.location = App.actualIdea.get('section4_url');
+    }
+  }
 });
 
 /************************************************/
@@ -411,12 +454,16 @@ function locateUser(node) {
 function addSwipeGesture(left,right) {
 	$("#slideContainer").touchwipe({
      wipeLeft: function() { 
-     	if(right!=null)
+     	if(right!=null) {
+     		console.log("app.js>>addSwipeGesture: swipe to right page: " + right);
      		window.location = App.actualIdea.get(right);     	
+     	}	
      },
      wipeRight: function() { 
-     	if(left!=null)
-     		window.location = App.actualIdea.get(left);
+     	if(left!=null){
+     		console.log("app.js>>addSwipeGesture: swipe to right page: " + left);
+     		window.location = App.actualIdea.get(left);     	
+     	}	
      },
      min_move_x: 20,
      min_move_y: 20,
