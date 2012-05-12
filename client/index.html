@@ -280,6 +280,9 @@
   <script type="text/x-handlebars" data-template-name="idea-section4">
     <div class="tab-pane" id="4">
       <p align="justify">{{App.actualIdea.comments}}</p>   
+      {{#each App.actualComments}}
+        <p>{{id}}</p>
+      {{/each}}
       <a href="#">Write a comment</a>                   
     </div>
   </script>

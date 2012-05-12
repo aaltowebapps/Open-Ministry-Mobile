@@ -73,10 +73,19 @@ App.routeManager = Em.RouteManager.create({
     // consume the path parameter when the state is entered
 	enter: function(stateManager, transition) {
 	  this._super(stateManager, transition);
+	  //get ID and load idea
 	  var itemId = stateManager.getPath('params.id');
+	  console.log("load idea with id: " + itemId);
 	  App.set('actualIdea',App.store.find(App.IdeaObj,itemId));
-	  console.log("0-store:" + App.actualIdea.get('title') + " " + itemId);
 	  this.get('view').set('content', App.actualIdea);
+	  //change the url of the commet and load comment
+	  /*App.CommentObj.reopenClass({
+		url: 'ideas/'+itemId+'/comment'
+	  });
+	  App.set('actualComments',App.store.find(App.CommentObj,59));
+	  console.log(App.actualComments);
+	  //App.actualIdea.get('comments').addObjects(App.store.findAll(App.CommentObj).content);
+	  */
 	},
     section1: App.SubNavState.create({
       route: 'idea-section1/:id',
@@ -163,24 +172,24 @@ App.Pages = Ember.Object.create({
 })
 
 App.IdeaObj = DS.Model.extend({
-    author_id: DS.attr('string'),
+    author_id: DS.attr('number'),
     body: DS.attr('string'),
     created_at: DS.attr('date'),
-    id: DS.attr('string'),
+    id: DS.attr('number'),
     publish_state: DS.attr('string'),
     slug: DS.attr('string'),
     state: DS.attr('string'),
     summary: DS.attr('string'),
     title: DS.attr('string'),
 	updated_at: DS.attr('date'),
-	expertOpinions: 'TODO API',
+	expertOpinions: 'TODO API',					//not in the real model -> has to be replaced
 	user_voted: DS.attr('string'),
     user_vote: DS.attr('string'),
-    comments: 'TODO include API',
-    votes_yes: 50,
-    votes_no: 20,
-    votes_total: 70,
-	section1_url: function() {
+    //comments: DS.hasMany('App.CommentObj'),
+    votes_yes: 50,								//not in the real model -> has to be replaced
+    votes_no: 20,								//not in the real model -> has to be replaced
+    votes_total: 70,							//not in the real model -> has to be replaced
+    section1_url: function() {
 		return "#ideaDetail/idea-section1/" + this.get('id');
 	}.property('url'),	
 	section2_url: function() {
@@ -195,18 +204,35 @@ App.IdeaObj = DS.Model.extend({
 	section5_url: function() {
 		return "#ideaDetail/idea-section5/" + this.get('id');
 	}.property('url'),	
-	shortUpdatedAt: function() {
-		var string = this.get('updated_at');
-		//string = string.substring(0,10);
-		return string;
-	}.property('updated_at'),
 	didLoad: function(){
-    	//alert("I loaded " + this.get('id'));
+    	console.log("IdeaObj with Id " + this.get('id') + " loaded.");
+    }
+});
+
+App.CommentObj = DS.Model.extend({
+	primaryKey: 'id',
+    id: DS.attr('number'),
+    author_id: DS.attr('number'),
+    body: DS.attr('string'),
+    published: DS.attr('string'),
+    commentable_id: DS.attr('string'),
+    commentable_type: DS.attr('string'),
+    created_at: DS.attr('string'),
+    updated_at: DS.attr('string'),
+    publish_state: DS.attr('string'),
+    didLoad: function(){
+    	console.log("CommentObj with Id " + this.get('id') + " loaded.");
     }
 });
 
 App.IdeaObj.reopenClass({
-    url: 'http://192.168.1.112:3000/ideas'
+    url: 'idea'	
+    //url: 'http://192.168.1.112:3000/ideas' /* if it is on a different computer running */
+});
+
+App.CommentObj.reopenClass({
+    url: 'ideas/1/comment'
+    //url: 'http://192.168.1.112:3000/ideas' /* if it is on a different computer running */
 });
 
 /************************************************/
@@ -251,8 +277,9 @@ App.adapter = DS.RESTAdapter.create({
 });
 
 App.store = DS.Store.create({
-	revision: 3,
-	adapter: App.adapter
+	revision: 4,
+	adapter: DS.RESTAdapter.create({ bulkCommit: false })
+	//adapter: App.adapter  /* my own adapter -> was necessary till the API was running locally on my laptop */
 });
 
 /************************************************/
@@ -260,7 +287,7 @@ App.store = DS.Store.create({
 /************************************************/
 
 App.allIdeas = App.store.findAll(App.IdeaObj);
-console.log(App.allIdeas);
+//App.allComments = App.store.findAll(App.CommentObj);
 
 /************************************************/
 /* Java Script Functions
