@@ -75,7 +75,7 @@ App.routeManager = Em.RouteManager.create({
 	  this._super(stateManager, transition);
 	  //get ID and load idea
 	  var itemId = stateManager.getPath('params.id');
-	  console.log("load idea with id: " + itemId);
+	  console.log("app.js>>enter/ideaView: load idea with id: " + itemId);
 	  App.set('actualIdea',App.store.find(App.IdeaObj,itemId));
 	  this.get('view').set('content', App.actualIdea);
 	  //change the url of the commet and load comment
@@ -90,25 +90,37 @@ App.routeManager = Em.RouteManager.create({
     section1: App.SubNavState.create({
       route: 'idea-section1/:id',
       viewClass: Em.View.extend({
-        templateName: 'idea-section1'
+        templateName: 'idea-section1',
+        didInsertElement: function() {
+        	addSwipeGesture(null,"section2_url");
+        }
       })
     }),
     section2: App.SubNavState.create({
       route: 'idea-section2/:id',
       viewClass: Em.View.extend({
-        templateName: 'idea-section2'
+        templateName: 'idea-section2',
+        didInsertElement: function() {
+        	addSwipeGesture("section1_url","section3_url");
+        }
       })
     }),
     section3: App.SubNavState.create({
       route: 'idea-section3/:id',
       viewClass: Em.View.extend({
-        templateName: 'idea-section3'
+        templateName: 'idea-section3',
+        didInsertElement: function() {
+        	addSwipeGesture("section2_url","section4_url");
+        }
       })
     }),
     section4: App.SubNavState.create({
       route: 'idea-section4/:id',
       viewClass: Em.View.extend({
-        templateName: 'idea-section4'
+        templateName: 'idea-section4',
+        didInsertElement: function() {
+        	addSwipeGesture("section3_url","section5_url");
+        }
       })
     }),
     section5: App.SubNavState.create({
@@ -116,6 +128,7 @@ App.routeManager = Em.RouteManager.create({
       viewClass: Em.View.extend({
         templateName: 'idea-section5',
         didInsertElement: function() {
+        	addSwipeGesture("section4_url",null);
         	drawPie(document.getElementById("pieCanvas"));
         	//drawPieRaphael();
         }
@@ -205,7 +218,7 @@ App.IdeaObj = DS.Model.extend({
 		return "#ideaDetail/idea-section5/" + this.get('id');
 	}.property('url'),	
 	didLoad: function(){
-    	console.log("IdeaObj with Id " + this.get('id') + " loaded.");
+    	console.log("app.js>>didLoad/IdeaObj: IdeaObj with Id " + this.get('id') + " loaded.");
     }
 });
 
@@ -221,7 +234,7 @@ App.CommentObj = DS.Model.extend({
     updated_at: DS.attr('string'),
     publish_state: DS.attr('string'),
     didLoad: function(){
-    	console.log("CommentObj with Id " + this.get('id') + " loaded.");
+    	console.log("app.js>>didLoad/CommentObj: CommentObj with Id " + this.get('id') + " loaded.");
     }
 });
 
@@ -298,12 +311,15 @@ function drawPie(canvas) {
     var data = [], color, colors = [], value = 0, total = 0;
     var datasize = 2;
 
-    data[0]=App.actualIdea.get('votes_no');//20; //no
-    console.log("nr1: " + data[0]);
-    data[1]=App.actualIdea.get('votes_yes');//22; //yes
-    console.log("nr2: " + data[0]);
-    total=App.actualIdea.get('votes_total');
+    App.actualIdea.set('votes_no',Math.floor((Math.random()*100)+1));	/* only for testing variables -> should be removed when real numbers are in the object */
+    App.actualIdea.set('votes_yes',Math.floor((Math.random()*100)+1));	/* only for testing variables -> should be removed when real numbers are in the object */
     
+    data[0]=App.actualIdea.get('votes_no'); //no
+    data[1]=App.actualIdea.get('votes_yes'); //yes
+
+    App.actualIdea.set('votes_total',(data[0]+data[1]));	/* only for testing variables -> should be removed when real numbers are in the object */
+    total=App.actualIdea.get('votes_total');
+
     colors[0]="#E35651";
     colors[1]="#5BB55B";
 
@@ -387,9 +403,25 @@ function drawPieRaphael() {
 function locateUser(node) {
 	//Update the position at least every 5 seconds and use GPS if available
 	navigator.geolocation.watchPosition(function(geodata) {
-		console.log("LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude);
+		console.log("app.js>>locateUser: LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude);
 		node.innerHTML = "Debug Info:<br /><br />LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude+'<a class="close" data-dismiss="alert">×</a>';
 	},function() {},{enableHighAccuracy:true, maximumAge:30000, timeout:5000} );
+}
+
+function addSwipeGesture(left,right) {
+	$("#slideContainer").touchwipe({
+     wipeLeft: function() { 
+     	if(right!=null)
+     		window.location = App.actualIdea.get(right);     	
+     },
+     wipeRight: function() { 
+     	if(left!=null)
+     		window.location = App.actualIdea.get(left);
+     },
+     min_move_x: 20,
+     min_move_y: 20,
+     preventDefaultEvents: true
+});
 }
 
 Handlebars.registerHelper('fct_shortUrl', function() {

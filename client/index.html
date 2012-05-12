@@ -23,6 +23,8 @@
   <script src="js/libs/ember-routemanager.js"></script>
   <script src="js/libs/ember-layout.js"></script>
 
+  <script type="text/javascript" src="js/libs/jquery.touchwipe.1.1.1.js"></script>
+
   <script src="js/libs/raphael.js"></script>
   <script src="js/libs/g.raphael-min.js"></script>
   <script src="js/libs/g.pie-min.js"></script>
@@ -236,23 +238,25 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="ideaDetail">
-    <h1>{{App.actualIdea.title}}</h1><br />
-    <div align="left">
-      <a href="#" class="btn btn-success btn-mini">
-        <i class="icon-star-empty" />
-        You follow this idea
-      </a>
-    </div>
-    <div class="subnav tabbable">
-      <ul class ="nav nav-pills">
-        <li class="idea-section1"><a {{bindAttr href="App.actualIdea.section1_url"}}>Introduction</a></li>
-        <li class="idea-section2"><a {{bindAttr href="App.actualIdea.section2_url"}}>General Statement</a></li>
-        <li class="idea-section3"><a {{bindAttr href="App.actualIdea.section3_url"}}>Expert Opinions</a></li>
-        <li class="idea-section4"><a {{bindAttr href="App.actualIdea.section4_url"}}>Comments</a></li>
-        <li class="idea-section5"><a {{bindAttr href="App.actualIdea.section5_url"}}>Voting</a></li>
-      </ul>
-      <div class="sub-container tab-content">
-          {{dynamicView}}
+    <div id="slideContainer">
+      <h1>{{App.actualIdea.title}}</h1><br />
+      <div align="left">
+        <a href="#" class="btn btn-success btn-mini">
+          <i class="icon-star-empty" />
+          You follow this idea
+        </a>
+      </div>
+      <div class="subnav tabbable">
+        <ul class ="nav nav-pills">
+          <li class="idea-section1"><a {{bindAttr href="App.actualIdea.section1_url"}}>Introduction</a></li>
+          <li class="idea-section2"><a {{bindAttr href="App.actualIdea.section2_url"}}>General Statement</a></li>
+          <li class="idea-section3"><a {{bindAttr href="App.actualIdea.section3_url"}}>Expert Opinions</a></li>
+          <li class="idea-section4"><a {{bindAttr href="App.actualIdea.section4_url"}}>Comments</a></li>
+          <li class="idea-section5"><a {{bindAttr href="App.actualIdea.section5_url"}}>Voting</a></li>
+        </ul>
+        <div class="sub-container tab-content">       
+              {{dynamicView}}
+        </div>
       </div>  
     </div>
   </script>

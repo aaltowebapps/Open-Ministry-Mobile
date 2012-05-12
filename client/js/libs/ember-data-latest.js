@@ -3521,7 +3521,7 @@ DS.RESTAdapter = DS.Adapter.extend({
 
     this.ajax(this.buildURL(root, id), "GET", {
       success: function(json) {
-        console.log("DS.find: sucess loading type:" + type + " with id:" + id + " json: " + json[root]);
+        console.log("ember-data.js>>DS.find: sucess loading type:" + type + " with id:" + id);
         store.load(type, json[root]);
         this.sideload(store, type, json, root);
       }
@@ -3550,8 +3550,7 @@ DS.RESTAdapter = DS.Adapter.extend({
         */
         var ids = json.map(function(item, index, self){ return item.id });
         
-        console.log("json of type: " + type + "; " + json);
-        console.log("DS.findAll: sucess loading type:" + type + " with id:" + ids + " json: " + json);
+        console.log("ember-data.js>>DS.findAll: sucess loading type:" + type + " with id:" + ids);
         if(type == 'App.CommentObj') {          
           store.loadMany(type, json);
           this.sideload(store, type, json, plural);
@@ -3598,7 +3597,7 @@ DS.RESTAdapter = DS.Adapter.extend({
 
   ajax: function(url, type, hash) {
     hash.url = "http://192.168.1.112:3000"+url+".json";
-    console.log("ajax request: "+hash.url);
+    console.log("ember-data.js>>ajax request: "+hash.url);
     hash.type = type;
     hash.dataType = 'json';
     //hash.contentType = 'application/json; charset=utf-8';
