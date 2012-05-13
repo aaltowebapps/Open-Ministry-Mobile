@@ -4,6 +4,9 @@
 
 var App = Ember.Application.create();
 
+App.APIurl = "192.168.1.112";
+App.APIport = "3000";
+
 /************************************************/
 /* Ember Routing & Layout
 /************************************************/
@@ -98,10 +101,7 @@ App.routeManager = Em.RouteManager.create({
         willDestroyElement: function() {
         	resetActiveTab("idea-section1");
         }
-      })/*,
-	  exit: function(stateManager,transition) {
-		resetActiveTab("idea-section1");
-	  }*/
+      })
     }),
     section2: App.SubNavState.create({
       route: 'idea-section2/:id',
@@ -114,10 +114,7 @@ App.routeManager = Em.RouteManager.create({
         willDestroyElement: function() {
         	resetActiveTab("idea-section2");
         }
-      })/*,
-	  exit: function(stateManager,transition) {
-		resetActiveTab("idea-section2");
-	  }*/
+      })
     }),
     section3: App.SubNavState.create({
       route: 'idea-section3/:id',
@@ -130,10 +127,7 @@ App.routeManager = Em.RouteManager.create({
         willDestroyElement: function() {
         	resetActiveTab("idea-section3");
         }
-      })/*,
-	  exit: function(stateManager,transition) {
-		resetActiveTab("idea-section3");
-	  }*/
+      })
     }),
     section4: App.SubNavState.create({
       route: 'idea-section4/:id',
@@ -146,10 +140,7 @@ App.routeManager = Em.RouteManager.create({
         willDestroyElement: function() {
         	resetActiveTab("idea-section4");
         }
-      })/*,
-	  exit: function(stateManager,transition) {
-		resetActiveTab("idea-section4");
-	  }*/
+      })
     }),
     section4comment: App.SubNavState.create({
       route: 'idea-section4-comment/:id',
@@ -162,10 +153,7 @@ App.routeManager = Em.RouteManager.create({
         willDestroyElement: function() {
         	resetActiveTab("idea-section4");
         }
-      })/*,
-	  exit: function(stateManager,transition) {
-		resetActiveTab("idea-section4");
-	  }*/
+      })
     }),
     section5: App.SubNavState.create({
       route: 'idea-section5/:id',
@@ -349,21 +337,31 @@ App.userController = Em.ArrayProxy.create({
 });
 
 App.userController.createUser('derro','asdf',true,false,false);
-/*App.testuser1 = App.User.create({
-	username: 'derro',
-	password: 'asdf',
-	allow_position: false,
-	save_offline: false,
-	subscribe_newsletter: false
-)};	
 
-App.userController.pushObject(App.testuser1);
-*/
 
 /************************************************/
 /* Ember Data Store Definition
 /************************************************/
 
+/*Adapter for revision 4 of ember-data */
+App.testadapter = DS.RESTAdapter.create({
+	ajax: function(url, type, hash) {
+	    hash.url = "http://"+App.APIurl+":"+App.APIport+url+".json";
+	    console.log("app.js>>Adapter>>ajax: "+hash.url);
+	    hash.type = type;
+	    hash.dataType = 'json';
+	    //hash.contentType = 'application/json; charset=utf-8';
+	    hash.context = this;
+
+	    if (hash.data && type !== 'GET') {
+	      hash.data = JSON.stringify(hash.data);
+	    }
+
+	    jQuery.ajax(hash);
+	  }
+});
+
+/*Adapter for revision 3 of ember-data */
 App.adapter = DS.RESTAdapter.create({
   findAll: function(store, type) {
       var url = type.url+".json";
@@ -403,7 +401,7 @@ App.adapter = DS.RESTAdapter.create({
 
 App.store = DS.Store.create({
 	revision: 4,
-	adapter: DS.RESTAdapter.create({ bulkCommit: false })
+	adapter: App.testadapter //DS.RESTAdapter.create({ bulkCommit: false })
 	//adapter: App.adapter  /* my own adapter -> was necessary till the API was running locally on my laptop */
 });
 

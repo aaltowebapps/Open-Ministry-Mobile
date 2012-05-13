@@ -8,7 +8,7 @@ The Online version is offline at the moment because it is not possible to access
 
 1. Download client folder
 2. Start REST API (see next point)
-3. Change the IP Address in ember-data-latest.js from 192.168.1.112:3000 to the one from the REST API with the right port.
+3. Change the IP address and port to the one of the API. Settings can be found in /js/app.js -> App.APIurl, App.APIport
 3. run index.html in your browser or mobile device simulator (optimized for iPhone 3G/4 and iPad)
 
 ### Installation guide - REST API

@@ -3596,11 +3596,10 @@ DS.RESTAdapter = DS.Adapter.extend({
   },
 
   ajax: function(url, type, hash) {
-    hash.url = "http://192.168.1.112:3000"+url+".json";
-    console.log("ember-data.js>>ajax request: "+hash.url);
+    hash.url = url;
     hash.type = type;
     hash.dataType = 'json';
-    //hash.contentType = 'application/json; charset=utf-8';
+    hash.contentType = 'application/json; charset=utf-8';
     hash.context = this;
 
     if (hash.data && type !== 'GET') {
