@@ -2,13 +2,14 @@
 
 ### Online Version
 
-[`Online Version`](http://wunderding.at/open-ministry-mobile/).
-(best viewed with the iOS Simualtor)
+The Online version is offline at the moment because it is not possible to access the API from the client with ember-data.js from a different URL. Cross-site HTTP requests are not allowed.
 
-### Installation guide - client
+### Installation guide  - client
 
 1. Download client folder
-2. run index.html in your browser or mobile device simulator
+2. Start REST API (see next point)
+3. Change the IP Address in ember-data-latest.js from 192.168.1.112:3000 to the one from the REST API with the right port.
+3. run index.html in your browser or mobile device simulator (optimized for iPhone 3G/4 and iPad)
 
 ### Installation guide - REST API
 
@@ -16,7 +17,8 @@ The rest code is deployed on a herokuapp server. Links to the REST Services can 
 
 ### Structure of the repository
 
-* client: contains the webpages for the mobile client
+* client: contains the webpages for the mobile client (singlepages)
+* client_old: old structure of the web client (multipages)
 * screenshots: screenshots of the client in the iPhone Simulator
 * phonegap-android: phoneGap project to test client in an Android Simulator
 * phonegap-windows: phoneGap project to test client in a Windows Phone Simulator
