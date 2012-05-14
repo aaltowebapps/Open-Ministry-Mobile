@@ -4,7 +4,7 @@
 
 var App = Ember.Application.create();
 
-App.APIurl = "192.168.1.112";
+App.APIurl = "130.233.85.227"; //"192.168.1.112";
 App.APIport = "3000";
 
 /************************************************/
@@ -512,16 +512,17 @@ function drawPieRaphael() {
 
 function locateUser(node) {
 	//Update the position at least every 5 seconds and use GPS if available
-	if(App.activeUser.get('allow_position')){
+	
 		navigator.geolocation.watchPosition(function(geodata) {
-			console.log("app.js>>locateUser: LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude);
-			node.innerHTML = '<a class="close" data-dismiss="alert">×</a>Debug Info:<br /><br />LAT: ' + geodata.coords.latitude + '<br />LONG: ' + geodata.coords.longitude;
+			if(App.activeUser.get('allow_position')){
+         console.log("app.js>>locateUser: LAT: " + geodata.coords.latitude + "<br />LONG: " + geodata.coords.longitude);
+			   node.innerHTML = '<a class="close" data-dismiss="alert">×</a>Debug Info:<br /><br />LAT: ' + geodata.coords.latitude + '<br />LONG: ' + geodata.coords.longitude;
+      }
+      else {
+        console.log("app.js>>locateUser: no location -> because user setting is false");
+        node.innerHTML = "Debug Info:<br /><br />Localization is offline";
+      }
 		},function() {},{enableHighAccuracy:true, maximumAge:30000, timeout:5000} );
-	}
-	else {
-		console.log("app.js>>locateUser: no location -> because user setting is false");
-		node.innerHTML = "Debug Info:<br /><br />Localization is offline";
-	}	
 }
 
 function addSwipeGesture(left,right) {
